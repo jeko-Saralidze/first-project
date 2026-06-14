@@ -84,3 +84,12 @@ Meta-level filter URL handling is also deployed through WPCode. This keeps real 
 - Confirm `Blocked by robots.txt` is not growing because of filter/add-to-cart URLs.
 - Review product/category indexing.
 - After GSC refreshes, confirm filtered URLs are no longer appearing in the Indexed group.
+
+## Final Remaining Issues
+
+1. Soft 404: `https://toyla.ge/cgi-sys/suspendedpage.cgi` currently returns `200`; fix at hosting/server level so it returns `404` or `410`.
+2. Product/category indexing spot-check: inspect at least one product URL and one category URL in GSC.
+3. Checkout + Meta Pixel live flow: verify add-to-cart -> checkout -> `InitiateCheckout` -> Flitt/payment UI -> fresh Meta Events Manager activity.
+4. Meta Ads preflight: confirm business verification/current status, billing/ad account restrictions, Pixel event freshness, objective, budget, audience, creative, and destination.
+5. WooCommerce emails: verify live processing/completed/refund emails and send test emails.
+6. Code cleanup: consolidate duplicate filters, frontend text overrides, cart JS/source of truth, and WPCode/child-theme logic after critical flows are verified.
