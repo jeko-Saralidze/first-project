@@ -66,19 +66,21 @@ Sitemap: https://toyla.ge/sitemap_index.xml
 - Rank Math is active.
 - Product schema is set to WooCommerce Product.
 - Product categories global setting is not noindex.
-- Existing WPCode snippet `Shop filter noindex` ID 3380 is active, but only uses `wp_robots`; Rank Math can still output its own robots meta.
-- Prepared local PHP enhancement: `C:\Users\JEKO\toyla-shop-filter-snippet.php`.
-- The PHP enhancement is not deployed yet. WPCode editor/save was blocked by Chrome clipboard/session limitations and save attempts redirected to Profile / connection lost.
+- Existing WPCode snippet `Shop filter noindex` ID 3380 was updated with the prepared PHP enhancement from `C:\Users\JEKO\toyla-shop-filter-snippet.php`.
+- Deployment verified on 2026-06-14.
+- Filtered shop URL returns `follow, noindex`.
+- Clean shop URL `https://toyla.ge/shop/` still returns `follow, index`.
+- Filter/add-to-cart links on the tested filtered page include `nofollow`.
 
 ## Meaning Of This Change
 
 This is a crawl-control fix through `robots.txt`. Googlebot should stop crawling WooCommerce filter/add-to-cart URLs that were creating a large `Blocked by robots.txt` report.
 
-This is not a meta noindex fix. If Rank Math robots meta control is needed on filter URLs later, the WPCode snippet should be updated or the logic should be deployed through the theme/plugin layer.
+Meta-level filter URL handling is also deployed through WPCode. This keeps real clean shop/product/category URLs indexable while filtered shop URLs are marked `noindex, follow`.
 
 ## Next Check
 
 - Re-check GSC validation status in 7-14 days.
 - Confirm `Blocked by robots.txt` is not growing because of filter/add-to-cart URLs.
 - Review product/category indexing.
-- Optionally deploy `toyla-shop-filter-snippet.php` if meta-level noindex/nofollow control is needed.
+- After GSC refreshes, confirm filtered URLs are no longer appearing in the Indexed group.
