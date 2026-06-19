@@ -22,6 +22,7 @@
   - desktop: `font-size: 15px`, `line-height: 20px`, `min-height/max-height: 80px`
   - mobile: `font-size: 14px`, `line-height: 19px`, `min-height/max-height: 76px`
 - A follow-up mobile fix added generic `ul.products li.product .woocommerce-loop-product__title` selectors and explicit `height`, `white-space`, `overflow`, `display`, `-webkit-box-orient`, and `-webkit-line-clamp` rules so mobile product grids cannot fall back to the theme's old 2-line treatment.
+- A second mobile correction updated the brand wrapper script to target the title link inside the heading (`a.woocommerce-loop-product__title_link`) instead of only the outer heading. This matches the live Avanam/TemplateMela product card markup and makes the brand color apply reliably on mobile.
 - Detects the brand at the beginning of each product card title and wraps it in:
 
 ```html
@@ -38,6 +39,7 @@
 - Styles the detected brand in teal (`#0f8f9d`), bold, and slightly larger (`1.12em`).
 - `Stapelstein®` was explicitly corrected so the registered mark is styled together with the brand name.
 - The brand regex was updated from a whitespace escape to a plain-space check, `(?= |$)`, because WPCode stripped the backslash from `\s` during saving and temporarily prevented mobile/updated pages from wrapping brand names.
+- The script runs immediately, on `DOMContentLoaded`, on `load`, with short delayed retries, and through a `MutationObserver` so products loaded or re-rendered later still receive the brand wrapper.
 
 ## Safety notes
 
@@ -70,12 +72,17 @@ Checked live after activation at `https://toyla.ge/shop/`.
 - JS script tag present: `#toyla-live-product-card-brand-script`
 - First 12 visible product cards:
   - branded count: `12/12`
-  - clipped titles: `0`
+  - branded count after anchor-level mobile correction: `12/12`
+  - brand color after anchor-level mobile correction: `rgb(15, 143, 157)`
+  - clipped titles on the final check: one long Stapelstein title was slightly taller than the fixed desktop title area; mobile brand coloring itself was confirmed working.
   - card overlap pairs: `0`
 - Mobile visual screenshot after the follow-up fix:
   - `C:\Users\JEKO\outputs\toyla-mobile-after-brand-fix.png`
   - confirms brand color is visible on mobile (`Clixo`, `Connetix`)
   - confirms product cards remain aligned without overlap
+- Mobile visual screenshot after the final anchor-level correction:
+  - `C:\Users\JEKO\outputs\toyla-mobile-after-anchor-fix.png`
+  - confirms the `Clixo` brand is teal on a 390px mobile viewport
 - Verified brand examples:
   - `Clixo`
   - `Connetix`
@@ -86,7 +93,7 @@ Checked live after activation at `https://toyla.ge/shop/`.
 
 - A second CSS-only height override was considered for a 5-line title area, but it was not left active.
 - Actual live change is the single active WPCode snippet ID `3392`.
-- Follow-up update to snippet ID `3392` added mobile-safe generic selectors and fixed the WPCode-stripped regex issue.
+- Follow-up updates to snippet ID `3392` added mobile-safe generic selectors, fixed the WPCode-stripped regex issue, and moved the brand wrapping into the title anchor used by the live theme.
 - Local backup/prepared snippets:
   - `C:\Users\JEKO\toyla-live-product-card-title-brand-snippet-2026-06-19.php`
   - `C:\Users\JEKO\toyla-live-product-card-title-height-override-2026-06-19.php`

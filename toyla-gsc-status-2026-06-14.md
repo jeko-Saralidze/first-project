@@ -182,4 +182,8 @@ Meta-level filter URL handling is also deployed through WPCode. This keeps real 
   - generic product title selectors added to snippet ID `3392`
   - WPCode-stripped regex escape fixed by using `(?= |$)`
   - mobile screenshot verified at `C:\Users\JEKO\outputs\toyla-mobile-after-brand-fix.png`
+- Final mobile correction after user screenshot:
+  - brand wrapper script now targets `a.woocommerce-loop-product__title_link` inside the title heading
+  - live `/shop/` verification showed brand spans `12/12` and brand color `rgb(15, 143, 157)`
+  - mobile screenshot verified at `C:\Users\JEKO\outputs\toyla-mobile-after-anchor-fix.png`
 - Detailed note: `toyla-product-card-title-branding-2026-06-19.md`.
