@@ -76,3 +76,54 @@ Mobile selector notes:
 ## Source Of Truth
 
 Do not rely on the old local `fix_gtranslate.php` helper. It reflects an earlier EN+KA-only assumption. Current GTranslate source of truth is `en`, `ka`, `ru`.
+
+## 2026-06-29 Mobile Header Follow-up
+
+A later mobile audit found that the desktop header had been updated but the mobile header still used the old Georgian tagline:
+
+```text
+Toyla ბავშვობის ლამაზი მოგონებებისთვის
+```
+
+The mobile source was corrected to match desktop:
+
+```text
+Toyla თამაშის მიღმა აღმოჩენებია
+```
+
+The live update targeted the actual Avanam theme mod key:
+
+```text
+mobile_html_content
+```
+
+Verification after the corrected live update:
+
+```text
+homepage: status=200, languages=True, old_mobile=False, new_mobile=True, override=True, bad_english=False
+shop:     status=200, languages=True, old_mobile=False, new_mobile=True, override=True, bad_english=False
+product:  status=200, languages=True, old_mobile=False, new_mobile=True, override=True, bad_english=False
+```
+
+Real product page used for audit:
+
+```text
+https://toyla.ge/product/clixo-%e1%83%93%e1%83%98%e1%83%9c%e1%83%9d%e1%83%96%e1%83%90%e1%83%95%e1%83%a0%e1%83%98%e1%83%a1-%e1%83%9c%e1%83%90%e1%83%99%e1%83%a0%e1%83%94%e1%83%91%e1%83%98-22-%e1%83%aa%e1%83%90%e1%83%9a%e1%83%98/
+```
+
+## Rule For Future Text Fixes
+
+Every text/copy fix must be adapted and verified for mobile as well as desktop before it is considered complete.
+
+Minimum verification checklist:
+
+```text
+1. Desktop source/rendered text checked.
+2. Mobile source/rendered text checked.
+3. Homepage checked.
+4. Shop page checked when header/global UI is involved.
+5. At least one real product page checked when global header/footer/snippets are involved.
+6. Old text absence checked.
+7. New text presence checked.
+8. Language selector still shows en/ka/ru.
+```
