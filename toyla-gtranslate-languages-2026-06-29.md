@@ -168,3 +168,19 @@ data-gt-lang="ru" -> RU
 ```
 
 Desktop shows the first wrapper; the second wrapper is hidden at desktop size and is used by the mobile header structure. Both wrappers receive the same corrected labels.
+
+## Open Follow-up: Russian Naming Review
+
+The Russian version still needs a naming/copy review. Current Russian labels/names are not final and should be reviewed manually before considering the RU experience complete.
+
+Scope for the future pass:
+
+```text
+- Header/tagline Russian copy
+- Menu labels
+- Product/card names translated by GTranslate
+- Brand/category labels where GTranslate produces awkward wording
+- Cart/shop common UI labels in RU
+```
+
+Status: open / needs correction.
