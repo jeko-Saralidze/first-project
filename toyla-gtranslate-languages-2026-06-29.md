@@ -127,3 +127,44 @@ Minimum verification checklist:
 7. New text presence checked.
 8. Language selector still shows en/ka/ru.
 ```
+
+## 2026-06-29 Georgian Label Update
+
+The visible Georgian language selector label was changed from `KA` to `GE`, while keeping the technical GTranslate language code as `ka`.
+
+Final visible selector labels:
+
+```text
+EN / GE / RU
+```
+
+Important implementation detail:
+
+```text
+data-gt-lang="ka" remains unchanged.
+Only the visible text label is changed to GE.
+```
+
+This was implemented in the isolated live mu-plugin:
+
+```text
+/home/toylage/public_html/wp-content/mu-plugins/toyla_tagline_translation_override.php
+```
+
+Final audit after the GE label update:
+
+```text
+homepage: status=200, languages=True, ge_logic=True, ge_text_rule=True, old_mobile=False, new_mobile=True, bad_en=False
+shop:     status=200, languages=True, ge_logic=True, ge_text_rule=True, old_mobile=False, new_mobile=True, bad_en=False
+product:  status=200, languages=True, ge_logic=True, ge_text_rule=True, old_mobile=False, new_mobile=True, bad_en=False
+```
+
+Rendered DOM check confirmed both GTranslate wrappers carry the corrected label mapping:
+
+```text
+data-gt-lang="en" -> EN
+data-gt-lang="ka" -> GE
+data-gt-lang="ru" -> RU
+```
+
+Desktop shows the first wrapper; the second wrapper is hidden at desktop size and is used by the mobile header structure. Both wrappers receive the same corrected labels.
