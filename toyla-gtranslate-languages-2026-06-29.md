@@ -325,3 +325,52 @@ Next safe approach:
 Do not re-enable a DOM-wide text replacement mu-plugin on live.
 Rebuild language UI/copy fixes in a narrower way: CSS-only label styling where possible, GTranslate option CSS only, and page-specific copy fixes only after local/test verification plus mobile verification.
 ```
+
+## 2026-06-30 Full Restore To Pre-Language-Work State
+
+User requested a full rollback to the exact state before the language work started.
+
+Applied through cPanel Terminal with one-off restore script:
+
+```text
+/home/toylage/toyla_full_restore_before_languages_20260630.php
+```
+
+Restore audit created on server:
+
+```text
+/home/toylage/wordpress-backups/toyla-language-full-restore-audit-20260630-044833.json
+```
+
+Actions applied:
+
+```text
+- Moved all language-related mu-plugins out of wp-content/mu-plugins.
+- Disabled files directory: /home/toylage/wordpress-backups/language-rollback-disabled-20260630-044829
+- Restored GTranslate option from: /home/toylage/wordpress-backups/toyla-gtranslate-before-test-language-copy-20260629-151347.json
+- Restored mobile_html_content from the mobile header backup.
+- Cleared WordPress/WP Rocket/LiteSpeed/minified cache paths.
+```
+
+Verified restored state:
+
+```text
+Homepage GET: 200, ~2.48s
+Homepage mobile-UA GET: 200, ~2.70s
+Shop GET: 200, ~2.75s
+GTranslate default_language: ka
+GTranslate languages: en,ka
+Language-related custom scripts absent:
+- toyla-tagline-translation-override: absent
+- toyla-mobile-safe-language-selector: absent
+- quickPattern/heavy DOM override: absent
+RU language: absent from restored GTranslate settings
+Mobile header text restored to old backup text:
+Toyla ბავშვობის ლამაზი მოგონებებისთვის
+```
+
+Current note:
+
+```text
+This is now a full rollback, not a partial language fix. Any future language work must restart from test/staging and must not reintroduce DOM-wide replacement scripts on live.
+```
