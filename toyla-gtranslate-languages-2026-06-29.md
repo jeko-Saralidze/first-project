@@ -184,3 +184,103 @@ Scope for the future pass:
 ```
 
 Status: open / needs correction.
+
+## 2026-06-30 Live Language Selector And RU Brand Fix
+
+Live mu-plugin updated:
+
+```text
+/home/toylage/public_html/wp-content/mu-plugins/toyla_tagline_translation_override.php
+```
+
+Confirmed live source audit:
+
+```text
+languages=["en","ka","ru"]: true
+GE CSS fallback loaded: true
+dropdown click-open state loaded: true
+Russian brand glossary loaded: true
+old mobile tagline removed: true
+new mobile Georgian tagline present: true
+```
+
+Implemented behavior:
+
+```text
+- Visible Georgian selector label is GE, while GTranslate technical code remains ka.
+- Russian remains enabled.
+- Language dropdown opens on click and stays open until outside click, Escape, or a language choice.
+- Mobile header uses the same language-label correction rule as desktop.
+- Russian translations keep brand names in Latin script where GTranslate rewrites them.
+```
+
+Russian brand glossary currently covered:
+
+```text
+Clixo
+Connetix
+Stapelstein®
+Modu
+Bilibo
+Kidlupe
+KidTooki
+PlayMais
+```
+
+Rule added for future fixes:
+
+```text
+Every language/text correction must be checked on mobile and desktop before completion. Header/global UI fixes must be verified in both wrappers, because desktop and mobile can render separate GTranslate wrappers.
+```
+
+Pending hardening, not yet confirmed live because cPanel Terminal input became unstable during the final pass:
+
+```text
+- Extra cleanup for duplicated generated tagline strings like "Toyla - Toyla - ..." is prepared in the local override file.
+- Safer event-target guards for dropdown click handlers are prepared locally.
+- Current live source already contains the main GE/dropdown/RU-brand fixes above.
+```
+
+## 2026-06-30 Live Rescue: Language Override Performance Fix
+
+Live issue: the language/tagline override had a full-body text scan running repeatedly with `setInterval(..., 1200)` plus broad mutation handling. On the live WordPress/GTranslate/Elementor page this could freeze an already-open browser tab.
+
+Rescue applied through cPanel Terminal by replacing:
+
+```text
+/home/toylage/public_html/wp-content/mu-plugins/toyla_tagline_translation_override.php
+```
+
+Backup was created automatically under:
+
+```text
+/home/toylage/wordpress-backups/toyla-tagline-translation-override-before-rescue-*.php
+```
+
+Implemented rescue behavior:
+
+```text
+- Removed the repeated full-body setInterval scan from the language override.
+- Removed broad attributes observation from the language override.
+- Added a quick text-pattern precheck before replacement work.
+- Added debounced/scheduled processing for added nodes only.
+- Kept GE visible label while preserving technical code ka.
+- Kept EN / GE / RU dropdown behavior.
+- Kept Russian brand-name preservation glossary.
+```
+
+Verification after rescue:
+
+```text
+shop status: 200 / rendered in new Chrome tab
+readyState: complete
+console errors: none reported
+GTranslate wrappers: 2
+visible labels: EN / GE / RU
+GE mapping: data-gt-lang="ka" -> GE
+click-open dropdown: opens and stays open with EN / GE / RU visible
+old setInterval full-body language override: removed from live shop HTML
+new quickPattern/scheduleRun override: present in live shop HTML
+```
+
+Note: the old Toyla browser tab may remain frozen because it had already executed the previous heavy script. A fresh tab/reload uses the rescued code and loaded normally.
