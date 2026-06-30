@@ -34,10 +34,13 @@
   - `Stapelstein`
   - `Clixo`
   - `Connetix`
+  - `Kidlupe`
+  - `KidTooki`
   - `Bilibo`
   - `Modu`
 - Styles the detected brand in teal (`#0f8f9d`), bold, and slightly larger (`1.12em`).
 - `Stapelstein®` was explicitly corrected so the registered mark is styled together with the brand name.
+- On 2026-06-20, snippet ID `3392` was updated to include `Kidlupe` and `KidTooki` in the brand prefix regex.
 - The brand regex was updated from a whitespace escape to a plain-space check, `(?= |$)`, because WPCode stripped the backslash from `\s` during saving and temporarily prevented mobile/updated pages from wrapping brand names.
 - The script runs immediately, on `DOMContentLoaded`, on `load`, with short delayed retries, and through a `MutationObserver` so products loaded or re-rendered later still receive the brand wrapper.
 
@@ -86,6 +89,8 @@ Checked live after activation at `https://toyla.ge/shop/`.
 - Verified brand examples:
   - `Clixo`
   - `Connetix`
+  - `Kidlupe`
+  - `KidTooki`
   - `Stapelstein®`
   - `Modu`
 
@@ -94,6 +99,7 @@ Checked live after activation at `https://toyla.ge/shop/`.
 - A second CSS-only height override was considered for a 5-line title area, but it was not left active.
 - Actual live change is the single active WPCode snippet ID `3392`.
 - Follow-up updates to snippet ID `3392` added mobile-safe generic selectors, fixed the WPCode-stripped regex issue, and moved the brand wrapping into the title anchor used by the live theme.
+- 2026-06-20 live verification confirmed that snippet ID `3392` is active and live shop HTML includes the updated regex: `Stapelstein®|Stapelstein|Clixo|Connetix|Kidlupe|KidTooki|Bilibo|Modu`.
 - Local backup/prepared snippets:
   - `C:\Users\JEKO\toyla-live-product-card-title-brand-snippet-2026-06-19.php`
   - `C:\Users\JEKO\toyla-live-product-card-title-height-override-2026-06-19.php`
