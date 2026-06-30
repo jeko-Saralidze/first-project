@@ -284,3 +284,44 @@ new quickPattern/scheduleRun override: present in live shop HTML
 ```
 
 Note: the old Toyla browser tab may remain frozen because it had already executed the previous heavy script. A fresh tab/reload uses the rescued code and loaded normally.
+
+## 2026-06-30 Emergency Rollback: Language Override Disabled
+
+The previous language override rescue still left the live site unstable and mobile users reported 500 errors / heavy loading. Root cause in rollback attempt: the file was renamed to another `.php` filename inside `mu-plugins`, which WordPress still auto-loads.
+
+Emergency stabilization applied through cPanel Terminal:
+
+```text
+Moved all toyla_tagline_translation_override*.php files out of:
+/home/toylage/public_html/wp-content/mu-plugins/
+
+Moved to:
+/home/toylage/wordpress-backups/mu-plugin-disabled/
+```
+
+Current stable state:
+
+```text
+Homepage desktop GET: 200, ~2.27s
+Homepage mobile-UA GET: 200, ~2.16s
+Shop GET: 200, ~2.48s
+Language override script in HTML: absent
+GTranslate base wrappers/settings: still present
+Browser console errors on homepage: none reported
+Broken image elements in browser audit: 0
+Direct checked assets: 200 OK
+```
+
+Tradeoff:
+
+```text
+The custom GE visible-label override, click-open dropdown persistence, tagline cleanup, and RU brand-name post-processing are temporarily disabled.
+The priority was restoring site availability and removing the code path that could freeze/500 the site.
+```
+
+Next safe approach:
+
+```text
+Do not re-enable a DOM-wide text replacement mu-plugin on live.
+Rebuild language UI/copy fixes in a narrower way: CSS-only label styling where possible, GTranslate option CSS only, and page-specific copy fixes only after local/test verification plus mobile verification.
+```
